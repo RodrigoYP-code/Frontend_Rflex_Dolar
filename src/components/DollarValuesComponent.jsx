@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDollarValues, updateDollar, deleteDollar } from '../store/dollarSlice';
+import LoadingScreen from './LoadingScreen';
+
 import {
   Table,
   TableBody,
@@ -35,6 +37,7 @@ const DollarValuesComponent = () => {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [selectedFecha, setSelectedFecha] = useState(null);
   
+
   const confirmDelete = (fecha) => {
   setSelectedFecha(fecha);
   setConfirmOpen(true);
@@ -71,9 +74,9 @@ const DollarValuesComponent = () => {
   
  
 
-  if (loading) return <p>Cargando...</p>;
+  if (loading) {return  <LoadingScreen />};
 
-  return (
+  return  (
     <div>
       
       <Dialog
@@ -98,17 +101,17 @@ const DollarValuesComponent = () => {
         </DialogActions>
       </Dialog>
 
-      <Box display="flex" gap={2} alignItems="center" mb={2} sx={{
-            maxWidth: 550,
-            mx: 'auto',
-            mt: 3,
-            p: 2,
-            borderRadius: 2,
-            boxShadow: 3,
-            bgcolor: '#f9f9f9',
-      }}>
-        <Typography variant="h6" gutterBottom>
-        Filtra la página
+    <Box   display="flex" flexWrap="wrap" justifyContent="center" alignItems="center" 
+             gap={2} mb={3} p={2} sx={{
+              bgcolor: '#ffffff',
+              borderRadius: 2,
+              boxShadow: 3,
+              maxWidth: 700,
+              mx: 'auto'
+              }}>
+        <Typography variant="h6" sx={{ minWidth: '100%',fontWeight: 'bold',
+        color: 'primary.main',mb: 2, }} gutterBottom>
+        Filtrar por Fecha
       </Typography>
         <DatePicker
           label="Fecha inicio"
@@ -136,26 +139,32 @@ const DollarValuesComponent = () => {
           Buscar
         </Button>
       </Box>
-      <Box display="flex" gap={2} alignItems="center" mb={2} sx={{
-          maxWidth: 550,
-          mx: 'auto',
-          mt: 3,
-          p: 2,
-          borderRadius: 2,
-          boxShadow: 3,
-          bgcolor: '#f9f9f9',
-          size:"small", 
-        }}>
+      <Box   display="flex" flexWrap="wrap" justifyContent="center" alignItems="center" 
+             gap={2} mb={3} p={2} sx={{
+              width: '100%',
+              maxWidth: 700,
+              mx: 'auto',
+              mt: 4,
+              p: 2,
+              borderRadius: 2,
+              boxShadow: 3,
+              bgcolor: '#ffffff',
+              overflowX: 'auto'
+              }}>
             {loading ? (
               <CircularProgress />
             ) : (
-              <TableContainer component={Paper} sx={{ maxHeight: 440 }}>
+              <TableContainer component={Paper} sx={{ maxHeight: 440, overflowX: 'auto' }}>
                 <Table  sx={{ minWidth: 650 }} size="small" aria-label="a dense table, sticky table" stickyHeader >
-                  <TableHead>
+                  <TableHead stickyHeader> 
                     <TableRow>
-                      <TableCell><strong>Fecha</strong></TableCell>
-                      <TableCell><strong>Valor</strong></TableCell>
-                      <TableCell><strong>Acciones</strong></TableCell>
+                      <TableCell   sx={{ fontWeight: 'bold', bgcolor: '#f0f0f0', 
+                      color: '#333',  borderBottom: '1px solid #ddd',
+                      }}><strong>Fecha</strong></TableCell>
+                      <TableCell sx={{fontWeight: 'bold', bgcolor: '#f0f0f0',  
+                      color: '#333',borderBottom: '1px solid #ddd',}}><strong>Valor</strong></TableCell>
+                      <TableCell sx={{fontWeight: 'bold', bgcolor: '#f0f0f0', 
+                      color: '#333', borderBottom: '1px solid #ddd',}}><strong>Acciones</strong></TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -185,6 +194,7 @@ const DollarValuesComponent = () => {
                             </Button>
                           ) : (
                             <Button
+                              sx={{ bgcolor: '#64b5f6', '&:hover': { bgcolor: '#42a5f5' } }}
                               variant="contained"
                               color="#f9f9f9"
                               onClick={() => {
@@ -198,7 +208,7 @@ const DollarValuesComponent = () => {
                           <Button
                             variant="contained"
                             color="error"
-                            sx={{ ml: 5 }} 
+                            sx={{ ml: 5 , bgcolor: '#ef5350', '&:hover': { bgcolor: '#e53935' }}} 
                             onClick={() => confirmDelete(item.fecha)}
                           >
                             Eliminar

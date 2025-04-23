@@ -3,7 +3,7 @@ import HighchartsReact from 'highcharts-react-official';
 import Exporting from 'highcharts/modules/exporting';
 import { useSelector } from 'react-redux';
 import { useMemo } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Paper } from '@mui/material';
 
 
 const DollarChart = () => {
@@ -17,7 +17,7 @@ const DollarChart = () => {
 
   const options = {
     title: {
-      text: 'Fluctuación del Dólar',
+      text: 'USD DOLLAR VALUES',
     },
     rangeSelector: {
       selected: 1,
@@ -49,38 +49,39 @@ const DollarChart = () => {
       },
     ],
   };
-  if (loading) return ;
+  if (loading) return null;
+
   return (
-      <div>
-        <Typography variant="h3" gutterBottom  align="start"   sx={{ mt: 6 }} >
-            Valores del dólar 
-        </Typography>
-               {loading ? (
-                             <CircularProgress />
-                           ) : ( <Box
-                display="flex"
-                gap={2}
-                alignItems="center"
-                mb={2}
-                sx={{
-                    maxWidth: 700,
-                    height: 435,
-                    mt: 6,
-                    p: 2,
-                    borderRadius: 2,
-                    boxShadow: 3,
-                    bgcolor: '#f9f9f9',
-                }}
-                    >
-                        
-                <HighchartsReact
-                    highcharts={Highcharts}
-                    constructorType="stockChart"
-                    options={options}
-                />
-          </Box>
-                  )}
-    </div>
+    <Paper
+      elevation={3}
+      sx={{
+        p: 3,
+        borderRadius: 2,
+        bgcolor: '#f9f9f9',
+        flex: 1,
+        minWidth: 300,
+        maxWidth: 700,
+      }}
+    >
+      <Typography
+       variant="h4"
+       align="center"
+        sx={{
+          fontWeight: 'bold',
+          color: '#2196f3',
+          mb: 4,
+          textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
+          letterSpacing: 1,
+        }}
+      >
+        Fluctuación del Dólar
+      </Typography>
+      <HighchartsReact
+        highcharts={Highcharts}
+        constructorType="stockChart"
+        options={options}
+      />
+    </Paper>
   );
 };
 
